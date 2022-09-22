@@ -11,6 +11,7 @@ import java.util.List;
 public class RoomService {
 
     private final RoomRepository repository;
+
     @Autowired
     public RoomService(RoomRepository repository) {
         this.repository = repository;
@@ -24,4 +25,20 @@ public class RoomService {
         return repository.save(room);
     }
 
+    public Room addRoom(Room room) {
+        return repository.save(room);
+    }
+
+    public Room getEmptyRoom() {
+        return repository.findFirstByStatusFalse();
+    }
+
+    public String changeRoomStatus(int roomNumber) {
+        Room room = repository.findByRoomNumber(roomNumber);
+        if(room == null){
+            return null;
+        }
+        room.setStatus(false);
+        return String.valueOf(room.getRoomNumber());
+    }
 }

@@ -4,26 +4,29 @@ import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
-public class Room implements Serializable {
+public class Registration implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(nullable = false, updatable = false)
     private Long id;
+    private Guest guest;
     private int roomNumber;
-    private boolean status;
+    private boolean active;
 
-    public Room() {
+    public Registration() {
     }
 
-    public Room(int roomNumber, boolean status) {
+    public Registration(Guest guest, int roomNumber, boolean active) {
+        this.guest = guest;
         this.roomNumber = roomNumber;
-        this.status = status;
+        this.active = active;
     }
 
-    public Room(Long id, int roomNumber, boolean status) {
+    public Registration(Long id, Guest guest, int roomNumber, boolean active) {
         this.id = id;
+        this.guest = guest;
         this.roomNumber = roomNumber;
-        this.status = status;
+        this.active = active;
     }
 
     public Long getId() {
@@ -34,6 +37,14 @@ public class Room implements Serializable {
         this.id = id;
     }
 
+    public Guest getGuest() {
+        return guest;
+    }
+
+    public void setGuest(Guest guest) {
+        this.guest = guest;
+    }
+
     public int getRoomNumber() {
         return roomNumber;
     }
@@ -42,11 +53,11 @@ public class Room implements Serializable {
         this.roomNumber = roomNumber;
     }
 
-    public boolean isStatus() {
-        return status;
+    public boolean isActive() {
+        return active;
     }
 
-    public void setStatus(boolean status) {
-        this.status = status;
+    public void setActive(boolean active) {
+        this.active = active;
     }
 }
