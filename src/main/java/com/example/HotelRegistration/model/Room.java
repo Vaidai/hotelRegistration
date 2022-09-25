@@ -9,20 +9,20 @@ public class Room implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private int roomNumber;
-    private boolean status;
+    private boolean isEmpty;
 
     public Room() {
     }
 
-    public Room(int roomNumber, boolean status) {
+    public Room(int roomNumber, boolean isEmpty) {
         this.roomNumber = roomNumber;
-        this.status = status;
+        this.isEmpty = isEmpty;
     }
 
-    public Room(Long id, int roomNumber, boolean status) {
+    public Room(Long id, int roomNumber, boolean isEmpty) {
         this.id = id;
         this.roomNumber = roomNumber;
-        this.status = status;
+        this.isEmpty = isEmpty;
     }
 
     public Long getId() {
@@ -41,11 +41,11 @@ public class Room implements Serializable {
         this.roomNumber = roomNumber;
     }
 
-    public boolean isStatus() {
-        return status;
+    public boolean isEmpty() {
+        return isEmpty;
     }
 
-    public void setStatus(boolean status) {
-        this.status = status;
+    public void setEmpty(boolean empty) {
+        this.isEmpty = empty;
     }
 }

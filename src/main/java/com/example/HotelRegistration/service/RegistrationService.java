@@ -27,39 +27,43 @@ public class RegistrationService {
         this.roomService = roomService;
     }
 
+    public List<Registration> getAllRegistrations() {
+        return registrationRepository.findAll();
+    }
+
     @Transactional
     public String registerAGuest(Guest guest) {
         Room emptyRoom = roomService.getEmptyRoom();
         if (emptyRoom == null) {
             return NO_EMPTY_ROOMS_MESSAGE;
         }
-        Registration registration = registrationRepository.save(new Registration(guest, emptyRoom.getRoomNumber(), true));
-        emptyRoom.setStatus(true);
+        Registration registration = registrationRepository.save(new Registration(guest, emptyRoom.getId(), true));
+        emptyRoom.setEmpty(false);
         return MessageFormat.format(SUCCESSFUL_REGISTRATION_MESSAGE, registration.getGuest().getFirstName(), registration.getGuest().getLastName(), emptyRoom.getRoomNumber());
     }
 
+
     @Transactional
-    public String checkOutAGuest(int roomNumber) {
-        Optional<Registration> registration = registrationRepository.findByRoomNumberAndActiveTrue(roomNumber);
+    public String checkOutAGuest(Long roomId) {
+        Optional<Registration> registration = registrationRepository.findByRoomIdAndActiveTrue(roomId);
         if (registration.isEmpty() || registration.get().isActive() == false) {
-            return MessageFormat.format(NOT_EXIST_REGISTRATION_MESSAGE, roomNumber);
+            return MessageFormat.format(NOT_EXIST_REGISTRATION_MESSAGE, roomId);
+        }
+
+        String checkoutRoomNumber = roomService.checkOutRoom(registration.get().getRoomId());
+        if (checkoutRoomNumber == null) {
+            return MessageFormat.format(NOT_EXIST_REGISTRATION_MESSAGE, roomId);
         }
 
         registration.get().setActive(false);
-        String checkOutRoomNumber = roomService.changeRoomStatus(registration.get().getRoomNumber());
-
-        return MessageFormat.format(SUCCESSFUL_CHECK_OUT_MESSAGE, registration.get().getGuest().getFirstName(), registration.get().getGuest().getLastName(), roomNumber);
+        return MessageFormat.format(SUCCESSFUL_CHECK_OUT_MESSAGE, registration.get().getGuest().getFirstName(), registration.get().getGuest().getLastName(), checkoutRoomNumber);
     }
 
-    public List<Registration> getAllRegistrations() {
-        return registrationRepository.findAll();
-    }
-
-    public List<Registration> showOccupiedRooms() {
+    public List<Registration> showCheckedInRooms() {
         return registrationRepository.findAllByActiveTrue();
     }
 
-    public List<Registration> showRoomHistory(int roomNumber) {
-        return registrationRepository.findByRoomNumber(roomNumber);
+    public List<Registration> showRoomHistory(Long roomId) {
+        return registrationRepository.findByRoomId(roomId);
     }
 }

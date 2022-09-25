@@ -9,7 +9,10 @@ import java.util.Optional;
 
 @Repository
 public interface RegistrationRepository extends JpaRepository<Registration, Long> {
-    Optional<Registration> findByRoomNumberAndActiveTrue(int roomNumber);
+    Optional<Registration> findByRoomIdAndActiveTrue(Long roomId);
+
     List<Registration> findAllByActiveTrue();
-    List<Registration> findByRoomNumber(int roomNumber);
+
+    List<Registration> findByRoomId(Long roomId);
+
 }

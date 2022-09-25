@@ -4,8 +4,10 @@ import com.example.HotelRegistration.model.Room;
 import com.example.HotelRegistration.repository.RoomRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class RoomService {
@@ -21,20 +23,22 @@ public class RoomService {
         return repository.findAll();
     }
 
+    @Transactional
     public Room addRoom(Room room) {
         return repository.save(room);
     }
 
+
     public Room getEmptyRoom() {
-        return repository.findFirstByStatusFalse();
+        return repository.findFirstByIsEmptyTrue();
     }
 
-    public String changeRoomStatus(int roomNumber) {
-        Room room = repository.findByRoomNumber(roomNumber);
-        if(room == null){
+    public String checkOutRoom(Long roomId) {
+        Optional<Room> room = repository.findById(roomId);
+        if (room.isEmpty()) {
             return null;
         }
-        room.setStatus(false);
-        return String.valueOf(room.getRoomNumber());
+        room.get().setEmpty(true);
+        return String.valueOf(room.get().getRoomNumber());
     }
 }

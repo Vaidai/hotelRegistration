@@ -9,22 +9,15 @@ public class Registration implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private Guest guest;
-    private int roomNumber;
+    private Long roomId;
     private boolean active;
 
     public Registration() {
     }
 
-    public Registration(Guest guest, int roomNumber, boolean active) {
+    public Registration(Guest guest, Long roomId, boolean active) {
         this.guest = guest;
-        this.roomNumber = roomNumber;
-        this.active = active;
-    }
-
-    public Registration(Long id, Guest guest, int roomNumber, boolean active) {
-        this.id = id;
-        this.guest = guest;
-        this.roomNumber = roomNumber;
+        this.roomId = roomId;
         this.active = active;
     }
 
@@ -44,12 +37,12 @@ public class Registration implements Serializable {
         this.guest = guest;
     }
 
-    public int getRoomNumber() {
-        return roomNumber;
+    public Long getRoomId() {
+        return roomId;
     }
 
-    public void setRoomNumber(int roomNumber) {
-        this.roomNumber = roomNumber;
+    public void setRoomId(Long roomId) {
+        this.roomId = roomId;
     }
 
     public boolean isActive() {

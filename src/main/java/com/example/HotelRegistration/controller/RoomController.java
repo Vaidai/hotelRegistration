@@ -13,6 +13,7 @@ import java.util.List;
 public class RoomController {
 
     private final RoomService service;
+
     public RoomController(RoomService service) {
         this.service = service;
     }

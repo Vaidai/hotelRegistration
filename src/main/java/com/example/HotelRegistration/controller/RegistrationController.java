@@ -14,6 +14,7 @@ import java.util.List;
 public class RegistrationController {
 
     private final RegistrationService registrationService;
+
     public RegistrationController(RegistrationService registrationService) {
         this.registrationService = registrationService;
     }
@@ -28,18 +29,18 @@ public class RegistrationController {
         return new ResponseEntity<>(registrationService.registerAGuest(guest), HttpStatus.OK);
     }
 
-    @PutMapping("/checkOut/{roomNumber}")
-    public ResponseEntity<String> checkOutAGuest(@PathVariable int roomNumber) {
-        return new ResponseEntity<>(registrationService.checkOutAGuest(roomNumber), HttpStatus.OK);
+    @PutMapping("/checkOut/{roomId}")
+    public ResponseEntity<String> checkOutAGuest(@PathVariable Long roomId) {
+        return new ResponseEntity<>(registrationService.checkOutAGuest(roomId), HttpStatus.OK);
     }
 
-    @GetMapping("/showOccupiedRooms")
-    public ResponseEntity<List<Registration>> showOccupiedRooms() {
-        return new ResponseEntity<>(registrationService.showOccupiedRooms(), HttpStatus.OK);
+    @GetMapping("/showCheckedInRooms")
+    public ResponseEntity<List<Registration>> showCheckedInRooms() {
+        return new ResponseEntity<>(registrationService.showCheckedInRooms(), HttpStatus.OK);
     }
 
-    @GetMapping("/showRoomHistory/{roomNumber}")
-    public ResponseEntity<List<Registration>> showRoomHistory(@PathVariable int roomNumber) {
-        return new ResponseEntity<>(registrationService.showRoomHistory(roomNumber), HttpStatus.OK);
+    @GetMapping("/showRoomHistory/{roomId}")
+    public ResponseEntity<List<Registration>> showRoomHistory(@PathVariable Long roomId) {
+        return new ResponseEntity<>(registrationService.showRoomHistory(roomId), HttpStatus.OK);
     }
 }
