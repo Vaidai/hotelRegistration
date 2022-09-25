@@ -22,12 +22,6 @@ public class RoomController {
         return new ResponseEntity<>(service.getAllRooms(), HttpStatus.OK);
     }
 
-    @PutMapping(value = "/update")
-    public ResponseEntity<Room> updateRooms(@RequestBody Room room) {
-        Room updatedRoom = service.updateRoom(room);
-        return new ResponseEntity<>(updatedRoom, HttpStatus.OK);
-    }
-
     @PostMapping("/add")
     public ResponseEntity<Room> addRoom(@RequestBody Room room) {
         return new ResponseEntity<>(service.addRoom(room), HttpStatus.CREATED);

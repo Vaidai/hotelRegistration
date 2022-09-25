@@ -6,8 +6,7 @@ import java.io.Serializable;
 @Entity
 public class Registration implements Serializable {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(nullable = false, updatable = false)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private Guest guest;
     private int roomNumber;

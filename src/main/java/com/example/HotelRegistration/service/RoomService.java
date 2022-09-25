@@ -21,10 +21,6 @@ public class RoomService {
         return repository.findAll();
     }
 
-    public Room updateRoom(Room room) {
-        return repository.save(room);
-    }
-
     public Room addRoom(Room room) {
         return repository.save(room);
     }
