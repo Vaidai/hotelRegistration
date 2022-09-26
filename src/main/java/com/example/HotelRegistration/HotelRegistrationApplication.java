@@ -16,7 +16,7 @@ public class HotelRegistrationApplication {
 		SpringApplication.run(HotelRegistrationApplication.class, args);
 	}
 
-/*	@Bean
+	@Bean
 	public CorsFilter corsFilter() {
 		CorsConfiguration corsConfiguration = new CorsConfiguration();
 		corsConfiguration.setAllowCredentials(true);
@@ -30,5 +30,5 @@ public class HotelRegistrationApplication {
 		UrlBasedCorsConfigurationSource urlBasedCorsConfigurationSource = new UrlBasedCorsConfigurationSource();
 		urlBasedCorsConfigurationSource.registerCorsConfiguration("/**", corsConfiguration);
 		return new CorsFilter(urlBasedCorsConfigurationSource);
-	}*/
+	}
 }

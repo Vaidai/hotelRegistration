@@ -28,11 +28,11 @@ public class RoomService {
         return repository.save(room);
     }
 
-
     public Room getEmptyRoom() {
         return repository.findFirstByIsEmptyTrue();
     }
 
+    @Transactional
     public String checkOutRoom(Long roomId) {
         Optional<Room> room = repository.findById(roomId);
         if (room.isEmpty()) {
