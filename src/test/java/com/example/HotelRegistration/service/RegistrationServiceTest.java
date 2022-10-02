@@ -104,7 +104,7 @@ class RegistrationServiceTest {
                 new Registration(new Guest("Third", "Last"), 3l, true),
                 new Registration(new Guest("First Again", "Last"), 1l, true)
         );
-        Mockito.when(registrationRepository.findAllByActiveTrue()).thenReturn(expected);
+        Mockito.when(registrationRepository.findAllByActiveTrue()).thenReturn(Optional.of(expected));
 
         List<Registration> result = underTest.showCheckedInRooms();
 

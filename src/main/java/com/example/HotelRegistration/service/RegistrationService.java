@@ -55,10 +55,15 @@ public class RegistrationService {
     }
 
     public List<Registration> showCheckedInRooms() {
-        return registrationRepository.findAllByActiveTrue();
+        return registrationRepository.findAllByActiveTrue().get();
     }
 
+
     public List<Registration> showRoomHistory(Long roomId) {
-        return registrationRepository.findByRoomId(roomId).get();
+        Optional<List<Registration>> roomRegistrations = registrationRepository.findByRoomId(roomId);
+        if (!roomRegistrations.isPresent()){
+            return null;
+        }
+        return roomRegistrations.get();
     }
 }

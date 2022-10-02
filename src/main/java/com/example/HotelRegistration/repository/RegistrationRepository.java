@@ -11,7 +11,7 @@ import java.util.Optional;
 public interface RegistrationRepository extends JpaRepository<Registration, Long> {
     Optional<Registration> findByRoomIdAndActiveTrue(Long roomId);
 
-    List<Registration> findAllByActiveTrue();
+    Optional<List<Registration>> findAllByActiveTrue();
 
     Optional<List<Registration>> findByRoomId(Long roomId);
 
