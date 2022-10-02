@@ -21,6 +21,13 @@ public class Registration implements Serializable {
         this.active = active;
     }
 
+    public Registration(Long id, Guest guest, Long roomId, boolean active) {
+        this.id = id;
+        this.guest = guest;
+        this.roomId = roomId;
+        this.active = active;
+    }
+
     public Long getId() {
         return id;
     }

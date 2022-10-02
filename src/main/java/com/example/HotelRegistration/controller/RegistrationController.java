@@ -25,12 +25,12 @@ public class RegistrationController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<String> registerAGuest(@RequestBody Guest guest) {
+    public ResponseEntity<Registration> registerAGuest(@RequestBody Guest guest) {
         return new ResponseEntity<>(registrationService.registerAGuest(guest), HttpStatus.OK);
     }
 
     @PutMapping("/checkOut/{roomId}")
-    public ResponseEntity<String> checkOutAGuest(@PathVariable Long roomId) {
+    public ResponseEntity<Registration> checkOutAGuest(@PathVariable Long roomId) {
         return new ResponseEntity<>(registrationService.checkOutAGuest(roomId), HttpStatus.OK);
     }
 

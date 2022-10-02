@@ -7,17 +7,11 @@ import com.example.HotelRegistration.repository.RegistrationRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.text.MessageFormat;
 import java.util.List;
 import java.util.Optional;
 
 @Service
 public class RegistrationService {
-
-    private static final String NO_EMPTY_ROOMS_MESSAGE = "There is no empty rooms";
-    private static final String NOT_EXIST_REGISTRATION_MESSAGE = "There is no active registration in room number: {0}";
-    private static final String SUCCESSFUL_REGISTRATION_MESSAGE = "Guest {0} {1} is register in room number: {2}.";
-    private static final String SUCCESSFUL_CHECK_OUT_MESSAGE = "The guest {0} {1} has been checked out from room number: {2}.";
 
     private final RegistrationRepository registrationRepository;
     private final RoomService roomService;
@@ -32,31 +26,32 @@ public class RegistrationService {
     }
 
     @Transactional
-    public String registerAGuest(Guest guest) {
-        Room emptyRoom = roomService.getEmptyRoom();
-        if (emptyRoom == null) {
-            return NO_EMPTY_ROOMS_MESSAGE;
+    public Registration registerAGuest(Guest guest) {
+        Optional<Room> emptyRoom = roomService.getEmptyRoom();
+        if (emptyRoom.isEmpty()) {
+            return null;
         }
-        Registration registration = registrationRepository.save(new Registration(guest, emptyRoom.getId(), true));
-        emptyRoom.setEmpty(false);
-        return MessageFormat.format(SUCCESSFUL_REGISTRATION_MESSAGE, registration.getGuest().getFirstName(), registration.getGuest().getLastName(), emptyRoom.getRoomNumber());
+
+        Registration registration = registrationRepository.save(new Registration(guest, emptyRoom.get().getId(), true));
+        emptyRoom.get().setEmpty(false);
+        return registration;
     }
 
 
     @Transactional
-    public String checkOutAGuest(Long roomId) {
+    public Registration checkOutAGuest(Long roomId) {
         Optional<Registration> registration = registrationRepository.findByRoomIdAndActiveTrue(roomId);
         if (registration.isEmpty() || registration.get().isActive() == false) {
-            return MessageFormat.format(NOT_EXIST_REGISTRATION_MESSAGE, roomId);
+            return null;
         }
 
         String checkoutRoomNumber = roomService.checkOutRoom(registration.get().getRoomId());
         if (checkoutRoomNumber == null) {
-            return MessageFormat.format(NOT_EXIST_REGISTRATION_MESSAGE, roomId);
+            return null;
         }
 
         registration.get().setActive(false);
-        return MessageFormat.format(SUCCESSFUL_CHECK_OUT_MESSAGE, registration.get().getGuest().getFirstName(), registration.get().getGuest().getLastName(), checkoutRoomNumber);
+        return registration.get();
     }
 
     public List<Registration> showCheckedInRooms() {
@@ -64,6 +59,6 @@ public class RegistrationService {
     }
 
     public List<Registration> showRoomHistory(Long roomId) {
-        return registrationRepository.findByRoomId(roomId);
+        return registrationRepository.findByRoomId(roomId).get();
     }
 }

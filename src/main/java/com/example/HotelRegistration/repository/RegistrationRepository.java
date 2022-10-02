@@ -13,6 +13,6 @@ public interface RegistrationRepository extends JpaRepository<Registration, Long
 
     List<Registration> findAllByActiveTrue();
 
-    List<Registration> findByRoomId(Long roomId);
+    Optional<List<Registration>> findByRoomId(Long roomId);
 
 }
