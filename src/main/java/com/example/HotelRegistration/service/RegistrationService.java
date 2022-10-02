@@ -1,9 +1,11 @@
 package com.example.HotelRegistration.service;
 
+import com.example.HotelRegistration.dto.RegistrationDto;
 import com.example.HotelRegistration.model.Guest;
 import com.example.HotelRegistration.model.Registration;
 import com.example.HotelRegistration.model.Room;
 import com.example.HotelRegistration.repository.RegistrationRepository;
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
